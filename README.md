@@ -20,7 +20,7 @@ Run the app in dev mode
 
 Navigate to the http://localhost:6060/
 
-<img src="https://github.com/nulnow/express-file-hosting/test/img/screenshot.png" alt="admin panel" />
+<img src="https://github.com/nulnow/express-file-hosting/blob/master/test/img/screenshot.png?raw=true" alt="admin panel" />
 
 ## Run the tests
 
