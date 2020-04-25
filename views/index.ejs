@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAABPElEQVRoge2YMUoDQRRA38xsETYbBRUSJI14AIsUOYKFl9BjpFJP4BG0sBLBxkb0EhaCiL0gKBgQU4SMRax2VphdZP6C/5V/luG95W+zoCiKovxnTNXQnzNkzgmwC/SibvIcmwOO/k4tjiDgR/4eWKt9m0CEDSbLN19fHsBw6E+lA5Zr05zEEeEKneHJMhj0oeiCrWpMiF94vmYvfM72zd7rbfk4tMsy2N6ClZ68PICxhjzfZH31xl9vjMrHoeGgD84lcauFdYYivwrGwYNFN4lPIzqdYXkUBrRhbX7D2uCbbbFtHBogjQZIowHSaIA0GiCNBkijAdJogDQaIE1VwDS5RTwf5UFVwF0CkWZ4In5seSbAWwqfmryTuUl5GASY8eMT88UOmAvasU5TPJc4Nzajh2dpGUVRFKVdfANy2ze3gaJntAAAAABJRU5ErkJggg==" rel="icon" type="image/x-icon" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>express-file-hosting</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <style>
+        
+    </style>
+    <div id="app" style="display: none;">
+        <div class="container">
+            <div class="jumbotron">
+                <h1 class="display-4">Welcome to express-file-hosting!</h1>
+                <p class="lead">Here you cat try to upload a file</p>
+                <hr class="my-4">
+                <p class="lead">
+                    <div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" id="inputGroupFile01" multiple @change="onFileChange">
+                              <label class="custom-file-label" for="inputGroupFile01">Choose a file</label>
+                            </div>
+                          </div>
+                    </div>
+                </p>
+              </div>
+              <h6>Count: <%= linksCount %></h6>
+              <div class="mb-2">
+                  <button class="btn btn-sm btn-danger" @click="deleteAllFiles">Delete All</button>
+                  <br>
+              </div>
+              <ul class="list-group">
+                <% for(var i=0; i < links.length; i++) { %>
+                    <li class="list-group-item" style="display: flex; flex-flow: row wrap; justify-content: space-between; align-items: center;">
+                        <div>
+                            <img src="<%=links[i].url %>" alt="" class="mr-2" style="height: 50px; max-width: 200px;">
+                            <a href="<%=links[i].url %>"><%=links[i].url %></a>
+                        </div>
+                        <button class="btn btn-sm btn-danger mr-2" @click="onFileDelete('<%=links[i].guid %>')">Delete</button>
+                    </li>
+                <% } %>
+              </ul>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js?v=2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            methods: {
+                onFileChange(event) {
+                    const files = [...event.target.files]
+                    const formData = new FormData()
+                    for (let file of files) {
+                        formData.append(file.name, file)
+                    }
+                    axios.post('/upload', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }).then(res => {
+                        console.log(res)
+                        alert('Success!')
+                        window.location.reload()
+                    }).catch(err => {
+                        console.err(err)
+                        alert('Error!')
+                        window.location.reload()
+                    })
+                },
+                deleteAllFiles() {
+                    if (!confirm('Are you sure you want to delete all files?')) {
+                        return
+                    }
+                    axios.post('/delete-all')
+                        .then(res => {
+                            console.log(res)
+                            alert('All files were successfully deleted!')
+                            window.location.reload()
+                        }).catch(err => {
+                            console.error(err)
+                            alert('Something goes wrong!')
+                            window.location.reload()
+                        })
+                },
+                onFileDelete(guid) {
+                    if (!confirm('Are you sure you want to delete that file?')) {
+                        return
+                    }
+                    axios.post(`/delete/${guid}`)
+                        .then(res => {
+                            console.log(res)
+                            alert('File was successfully deleted!')
+                            window.location.reload()
+                        }).catch(err => {
+                            console.error(err)
+                            alert('Something goes wrong!')
+                            window.location.reload()
+                        })
+                }
+            }
+        })
+        document.querySelector('#app').style.display = 'block'
+    </script>
+</body>
+</html>

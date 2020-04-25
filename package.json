@@ -1,0 +1,37 @@
+{
+  "name": "express-file-hosting",
+  "version": "1.0.0",
+  "description": "File hosting app based on express and express-fileupload",
+  "bugs": {
+    "email": "andysikt@gmail.com",
+    "url": "https://github.com/nulnow/express-file-hosting/issues"
+  },
+  "main": "app.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node server.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon server.js",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "nulnow",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
+    "ejs": "^3.1.2",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.7-alpha.3",
+    "promise-fs": "^2.1.1",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "axios": "^0.19.2",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "form-data": "^3.0.0",
+    "jest": "^25.4.0",
+    "nodemon": "^2.0.3",
+    "superagent": "^5.2.2",
+    "supertest": "^4.0.2"
+  }
+}
