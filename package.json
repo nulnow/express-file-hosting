@@ -1,6 +1,6 @@
 {
   "name": "express-file-hosting",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "File hosting app based on express and express-fileupload",
   "bugs": {
     "email": "andysikt@gmail.com",
