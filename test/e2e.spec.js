@@ -10,6 +10,10 @@ const app = require('../app')
 const TEST_FILENAME = 'aYveJSydU-0.jpg'
 const TEST_STORAGE_DIR = path.join(__dirname, 'storage')
 
+if (!fs.existsSync(TEST_STORAGE_DIR)){
+    fs.mkdirSync(TEST_STORAGE_DIR);
+}
+
 const clearTestStorate = async () => {
     const files = await promiseFs.readdir(TEST_STORAGE_DIR)
     for (file of files) {

@@ -9,6 +9,10 @@ const rimraf = require('rimraf')
 const DIR = process.env.DIR || path.resolve(__dirname, 'storage')
 const NODE_ENV = process.env.NODE_ENV || 'poroduction'
 
+if (!fs.existsSync(DIR)){
+    fs.mkdirSync(DIR);
+}
+
 const app = express()
 
 const makeGuid = () => `${Math.random()}`.replace('0.', '')
