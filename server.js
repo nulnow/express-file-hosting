@@ -6,7 +6,7 @@ const app = require('./app')
 
 // Here is a strange problem with windows 10 (listen EACCES: permission denied localhost)
 
-const server = require('express')
+const server = require('express')()
 
 if (PREFIX) {
     server.use(PREFIX, app)
