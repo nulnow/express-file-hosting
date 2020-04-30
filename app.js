@@ -5,6 +5,7 @@ const express = require('express')
 const cors = require('cors')
 const fileUpload = require('express-fileupload')
 const rimraf = require('rimraf')
+const morgan = require('morgan')
 
 const DIR = process.env.DIR || path.resolve(__dirname, 'storage')
 const NODE_ENV = process.env.NODE_ENV || 'poroduction'
@@ -14,6 +15,7 @@ if (!fs.existsSync(DIR)){
 }
 
 const app = express()
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 
 const makeGuid = () => `${Math.random()}`.replace('0.', '')
 const isDirectory = source => fs.lstatSync(source).isDirectory()
