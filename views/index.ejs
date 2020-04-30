@@ -64,7 +64,7 @@
                     for (let file of files) {
                         formData.append(file.name, file)
                     }
-                    axios.post('/upload', formData, {
+                    axios.post('/files/upload', formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
@@ -82,7 +82,7 @@
                     if (!confirm('Are you sure you want to delete all files?')) {
                         return
                     }
-                    axios.post('/delete-all')
+                    axios.post('/files/delete-all')
                         .then(res => {
                             console.log(res)
                             alert('All files were successfully deleted!')
@@ -97,7 +97,7 @@
                     if (!confirm('Are you sure you want to delete that file?')) {
                         return
                     }
-                    axios.post(`/delete/${guid}`)
+                    axios.post(`/files/delete/${guid}`)
                         .then(res => {
                             console.log(res)
                             alert('File was successfully deleted!')

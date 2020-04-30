@@ -1,6 +1,6 @@
 const HOST = process.env.HOST
 const PORT = process.env.PORT || 6060
-const PREFIX = process.env.PREFIX
+const PREFIX = process.env.PREFIX || '/files'
 
 const app = require('./app')
 

@@ -9,6 +9,7 @@ const morgan = require('morgan')
 
 const DIR = process.env.DIR || path.resolve(__dirname, 'storage')
 const NODE_ENV = process.env.NODE_ENV || 'poroduction'
+const PREFIX = process.env.PREFIX || '/files'
 
 if (!fs.existsSync(DIR)){
     fs.mkdirSync(DIR);
@@ -24,9 +25,9 @@ const getDirectories = async (source) => {
 }
 const makeLink = (guid, filename) => {
     if (filename) {
-        return `/download/${guid}/${filename}`
+        return `${PREFIX || ''}/download/${guid}/${filename}`
     } else {
-        return `/download/${guid}`
+        return `${PREFIX || ''}/download/${guid}`
     }
 }
 
@@ -60,7 +61,7 @@ app.use('/download/:guid', async (req, res) => {
     }
 })
 
-if (NODE_ENV !== 'production' && NODE_ENV !== 'test') {
+// if (NODE_ENV !== 'production' && NODE_ENV !== 'test') {
     app.set('view engine', 'ejs')
     app.get('/', async (req, res) => {
         res.render('index', {
@@ -111,7 +112,7 @@ if (NODE_ENV !== 'production' && NODE_ENV !== 'test') {
             res.sendFile(path.resolve(__dirname, '404.html'))
         }
     })
-}
+// }
 
 app.use('*', (req, res) => {
     res.status(404)
