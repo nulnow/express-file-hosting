@@ -17,7 +17,7 @@ if (!fs.existsSync(DIR)){
 }
 
 const app = express()
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
+app.use(morgan())
 
 const makeGuid = () => `${Math.random()}`.replace('0.', '')
 const isDirectory = source => fs.lstatSync(source).isDirectory()
