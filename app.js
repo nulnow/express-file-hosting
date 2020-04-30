@@ -34,6 +34,10 @@ const makeLink = (guid, filename) => {
 
 app.use(cors())
 
+app.get('/ping', (req, res) => {
+    res.send('pong')
+})
+
 app.post('/upload', fileUpload(), async (req, res) => {
     const files = Object.values(req.files)
     const response = []
