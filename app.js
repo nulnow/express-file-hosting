@@ -1,3 +1,4 @@
+require('dotenv').configure()
 const path = require('path')
 const promiseFs = require('promise-fs')
 const fs = require('fs')
