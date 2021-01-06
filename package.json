@@ -27,7 +27,7 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "form-data": "^3.0.0",
